@@ -23,10 +23,11 @@ RSpec.describe DiscourseInvitesFromFile do
     expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(
       username: 'foo', quantity: 2
     ).and_return(['footoken', 'bartoken'])
+
     expect(subject.generate).to eq(
       [
-        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken",
-        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken"
+        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com",
+        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com"
       ]
     )
   end
