@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(spec)/})
   spec.require_paths = ['lib']
 
-  spec.add_dependency "discourse_api", "~> 0.10"
+  spec.add_dependency 'discourse_api', '~> 0.10'
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rspec', '~> 3.5'
