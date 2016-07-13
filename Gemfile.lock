@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    discourse-invites-from-file (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.12)
+  discourse-invites-from-file!
+
+BUNDLED WITH
+   1.12.3
