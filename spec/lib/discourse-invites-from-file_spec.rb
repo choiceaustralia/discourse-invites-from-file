@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe DiscourseInvitesFromFile do
-  let(:data) { "hello@example.com\nfoo@example.com" }
+  let(:data) { "hello@example.com\nfoo@example.com\n" }
 
   before do
     ENV['DISCOURSE_API_URL'] = 'http://localhost:3000'
@@ -15,7 +15,7 @@ RSpec.describe DiscourseInvitesFromFile do
 
   it 'reads IO' do
     expect(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
-    expect(subject.rows).to eq data.split("\n")
+    expect(subject.rows).to eq(['hello@example.com','foo@example.com'])
   end
 
   it 'generates some tokens' do

@@ -3,7 +3,10 @@ require 'csv'
 
 class DiscourseInvitesFromFile
   def client
-    DiscourseApi::Client.new(ENV['DISCOURSE_API_URL'])
+    client = DiscourseApi::Client.new(ENV['DISCOURSE_API_URL'])
+    client.api_key = ENV['DISCOURSE_API_KEY']
+    client.api_username = ENV['DISCOURSE_API_USERNAME']
+    client
   end
 
   def rows
@@ -11,7 +14,7 @@ class DiscourseInvitesFromFile
   end
 
   def generate
-    input = rows.clone
+    input = rows.clone.compact
     client.disposable_tokens(username: ENV['DISCOURSE_API_USERNAME'], quantity: input.count).collect do |token|
       "#{ENV['DISCOURSE_API_URL']}/invites/redeem/#{token}?email=#{input.shift}"
     end
