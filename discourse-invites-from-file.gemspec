@@ -1,7 +1,9 @@
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'discourse-invites-from-file'
-  spec.version       = '0.1.0'
+  spec.version       = '0.1.1'
   spec.authors       = ['Rimian Perkins']
   spec.email         = ['r.perkins@rimian.com.au']
   spec.description   = 'Import user details from a file and generate invite links for discourse'
@@ -12,6 +14,8 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.test_files    = spec.files.grep(%r{^(spec)/})
   spec.require_paths = ['lib']
+
+  spec.add_dependency "discourse_api", "~> 0.10"
 
   spec.add_development_dependency 'bundler', '~> 1.12'
   spec.add_development_dependency 'rspec', '~> 3.5'
