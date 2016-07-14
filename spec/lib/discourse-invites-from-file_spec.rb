@@ -21,7 +21,7 @@ RSpec.describe DiscourseInvitesFromFile do
   it 'generates some tokens' do
     allow(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
     expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(
-      username: 'foo', quantity: 2
+      username: 'foo', quantity: 2, group_names: nil
     ).and_return(['footoken', 'bartoken'])
 
     expect(subject.generate).to eq(
