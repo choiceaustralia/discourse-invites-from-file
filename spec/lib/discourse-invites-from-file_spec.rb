@@ -8,6 +8,7 @@ RSpec.describe DiscourseInvitesFromFile do
     ENV['DISCOURSE_API_INPUT'] = 'filename'
     ENV['DISCOURSE_API_USERNAME'] = 'foo'
     ENV['DISCOURSE_API_GROUP_NAMES'] = 'security,support'
+    ENV['DISCOURSE_API_TOPIC_ID'] = '8'
   end
 
   it 'has a client' do
@@ -30,8 +31,8 @@ RSpec.describe DiscourseInvitesFromFile do
 
     expect(subject.generate).to eq(
       [
-        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com",
-        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com"
+        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com&topic=8",
+        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com&topic=8"
       ]
     )
   end

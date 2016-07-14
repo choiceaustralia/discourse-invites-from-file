@@ -21,7 +21,8 @@ class DiscourseInvitesFromFile
       quantity: input.count,
       group_names: ENV['DISCOURSE_API_GROUP_NAMES']
     ).collect do |token|
-      "#{ENV['DISCOURSE_API_URL']}/invites/redeem/#{token}?email=#{input.shift}"
+      topicid = "&topic=#{ENV['DISCOURSE_API_TOPIC_ID']}" unless ENV['DISCOURSE_API_TOPIC_ID'].nil?
+      "#{ENV['DISCOURSE_API_URL']}/invites/redeem/#{token}?email=#{input.shift}#{topicid}"
     end
   end
 end

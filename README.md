@@ -31,3 +31,7 @@ Install the needed gems
 Run the rake task:
 
 `bundle exec rake invites:generate`
+
+or with enviroment variables (these aren't set in ``.env`)
+
+`bundle exec rake invites:generate DISCOURSE_API_GROUP_NAMES=security,support DISCOURSE_API_TOPIC_ID=123`
