@@ -7,6 +7,7 @@ RSpec.describe DiscourseInvitesFromFile do
     ENV['DISCOURSE_API_URL'] = 'http://localhost:3000'
     ENV['DISCOURSE_API_INPUT'] = 'filename'
     ENV['DISCOURSE_API_USERNAME'] = 'foo'
+    ENV['DISCOURSE_API_GROUP_NAMES'] = 'security,support'
   end
 
   it 'has a client' do
@@ -20,8 +21,11 @@ RSpec.describe DiscourseInvitesFromFile do
 
   it 'generates some tokens' do
     allow(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
+
     expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(
-      username: 'foo', quantity: 2, group_names: nil
+      username: 'foo',
+      quantity: 2,
+      group_names: 'security,support'
     ).and_return(['footoken', 'bartoken'])
 
     expect(subject.generate).to eq(
