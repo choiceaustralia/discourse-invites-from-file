@@ -15,7 +15,7 @@ class DiscourseInvitesFromFile
 
   def generate
     input = rows.clone.compact
-    client.disposable_tokens(username: ENV['DISCOURSE_API_USERNAME'], quantity: input.count).collect do |token|
+    client.disposable_tokens(username: ENV['DISCOURSE_API_USERNAME'], quantity: input.count, group_names: ENV['DISCOURSE_API_GROUP_NAMES']).collect do |token|
       "#{ENV['DISCOURSE_API_URL']}/invites/redeem/#{token}?email=#{input.shift}"
     end
   end
