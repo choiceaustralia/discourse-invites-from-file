@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'discourse-invites-from-file'
-  spec.version       = '0.4.0'
+  spec.version       = '0.4.1'
   spec.authors       = ['Rimian Perkins']
   spec.email         = ['r.perkins@rimian.com.au']
   spec.description   = 'Import user details from a file and generate invite links for discourse'
