@@ -30,8 +30,10 @@ Install the needed gems
 
 Run the rake task:
 
-`bundle exec rake invites:generate`
+`bundle exec rake invites:generate:csv`
 
 or with enviroment variables (these aren't set in ``.env`)
 
-`bundle exec rake invites:generate DISCOURSE_API_GROUP_NAMES=security,support DISCOURSE_API_TOPIC_ID=123`
+`bundle exec rake invites:generate:csv DISCOURSE_API_GROUP_NAMES=security,support DISCOURSE_API_TOPIC_ID=123`
+
+This outputs to a file `tmp/output.csv`
