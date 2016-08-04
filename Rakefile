@@ -4,6 +4,10 @@ require 'discourse-invites-from-file'
 Dotenv.load
 
 namespace :invites do
+  task :dump do
+    puts DiscourseInvitesFromFile.new.client.inspect
+  end
+
   desc 'Generate invites from a CSV file to Standard Out'
   task :generate do
     puts DiscourseInvitesFromFile.new.generate
