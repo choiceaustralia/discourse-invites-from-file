@@ -13,9 +13,13 @@ namespace :invites do
     puts DiscourseInvitesFromFile.new.generate
   end
 
-  desc 'Generate invites from a CSV file to a tmp/output.csv'
+  desc 'Generate invites from a CSV file and append to a tmp/output.csv'
   task 'generate:csv' do
     links = DiscourseInvitesFromFile.new.generate
-    File.open(ENV['DISCOURSE_API_OUTPUT'], 'w') { |f| f.write links.join("\n") }
+    File.open(ENV['DISCOURSE_API_OUTPUT'], 'a') do |f|
+      newline = "\n"
+      f.write links.join(newline)
+      f.write newline
+    end
   end
 end

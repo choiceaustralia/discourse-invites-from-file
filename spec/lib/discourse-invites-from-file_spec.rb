@@ -20,20 +20,28 @@ RSpec.describe DiscourseInvitesFromFile do
     expect(subject.rows).to eq(['hello@example.com','foo@example.com'])
   end
 
-  it 'generates some tokens' do
-    allow(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
+  describe 'generate' do
+    before do
+      allow(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
+    end
 
-    expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(
-      username: 'foo',
-      quantity: 2,
-      group_names: 'security,support'
-    ).and_return(['footoken', 'bartoken'])
+    let(:results) { [ "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com&topic=8", "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com&topic=8" ] }
+    let(:tokens) { ['footoken', 'bartoken'] }
+    let(:options) { { username: 'foo', group_names: 'security,support' } }
 
-    expect(subject.generate).to eq(
-      [
-        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com&topic=8",
-        "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com&topic=8"
-      ]
-    )
+    it 'generates all the tokens' do
+      expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(options.merge(quantity: 2)).and_return(tokens)
+      expect(subject.generate).to eq(results)
+    end
+
+    it 'generates limited tokens' do
+      expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(options.merge(quantity: 1)).and_return([tokens.first])
+      expect(subject.generate(1)).to eq([results.first])
+    end
+
+    it 'generates limited tokens' do
+      expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(options.merge(quantity: 2)).and_return(tokens)
+      expect(subject.generate(2)).to eq(results)
+    end
   end
 end
