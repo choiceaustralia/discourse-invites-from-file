@@ -20,7 +20,7 @@ RSpec.describe DiscourseInvitesFromFile do
     expect(subject.rows).to eq(['hello@example.com', 'foo@example.com'])
   end
 
-  describe 'generate' do
+  describe 'generate invite tokens' do
     before do
       allow(File).to receive(:open).with('filename', 'r', universal_newline: false) { StringIO.new(data) }
     end
@@ -31,17 +31,20 @@ RSpec.describe DiscourseInvitesFromFile do
 
     it 'generates all the tokens' do
       expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(options.merge(quantity: 2)).and_return(tokens)
-      expect(subject.generate).to eq(results)
+      expect(subject.invite_tokens).to eq(results)
     end
 
     it 'generates limited tokens' do
       expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(options.merge(quantity: 1)).and_return([tokens.first])
-      expect(subject.generate(1)).to eq([results.first])
+      expect(subject.invite_tokens(1)).to eq([results.first])
     end
 
     it 'generates limited tokens' do
       expect_any_instance_of(DiscourseApi::Client).to receive(:disposable_tokens).with(options.merge(quantity: 2)).and_return(tokens)
-      expect(subject.generate(2)).to eq(results)
+      expect(subject.invite_tokens(2)).to eq(results)
     end
   end
+
+  describe 'generate topics'
+  describe 'generate categories'
 end

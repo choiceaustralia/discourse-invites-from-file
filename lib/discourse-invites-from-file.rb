@@ -13,7 +13,7 @@ class DiscourseInvitesFromFile
     CSV.read(ENV['DISCOURSE_API_INPUT'], 'r').collect(&:first)
   end
 
-  def generate(limit = nil)
+  def invite_tokens(limit = nil)
     input = rows.clone.compact
 
     input.slice!(limit) unless limit.nil?
