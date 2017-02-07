@@ -16,17 +16,17 @@ RSpec.describe DiscourseInvitesFromFile do
   end
 
   it 'reads IO' do
-    expect(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
-    expect(subject.rows).to eq(['hello@example.com','foo@example.com'])
+    expect(File).to receive(:open).with('filename', 'r', universal_newline: false) { StringIO.new(data) }
+    expect(subject.rows).to eq(['hello@example.com', 'foo@example.com'])
   end
 
   describe 'generate' do
     before do
-      allow(File).to receive(:open).with('filename', 'r', {:universal_newline => false}) { StringIO.new(data) }
+      allow(File).to receive(:open).with('filename', 'r', universal_newline: false) { StringIO.new(data) }
     end
 
-    let(:results) { [ "#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com&topic=8", "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com&topic=8" ] }
-    let(:tokens) { ['footoken', 'bartoken'] }
+    let(:results) { ["#{ENV['DISCOURSE_API_URL']}/invites/redeem/footoken?email=hello@example.com&topic=8", "#{ENV['DISCOURSE_API_URL']}/invites/redeem/bartoken?email=foo@example.com&topic=8"] }
+    let(:tokens) { %w(footoken bartoken) }
     let(:options) { { username: 'foo', group_names: 'security,support' } }
 
     it 'generates all the tokens' do
