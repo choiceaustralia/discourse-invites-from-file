@@ -18,6 +18,8 @@ class DiscourseInvitesFromFile
 
     input.slice!(limit) unless limit.nil?
 
+    puts "Reading #{input.count} rows"
+
     client.disposable_tokens(
       username: ENV['DISCOURSE_API_USERNAME'],
       quantity: input.count,
